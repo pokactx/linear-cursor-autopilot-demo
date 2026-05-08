@@ -1,9 +1,45 @@
 import Image from "next/image";
 
+function AppMeta() {
+  const version = process.env.NEXT_PUBLIC_APP_VERSION ?? "—";
+  const buildTime = process.env.NEXT_PUBLIC_BUILD_TIME;
+  const isDev = process.env.NODE_ENV === "development";
+
+  return (
+    <footer
+      className="w-full max-w-3xl border-t border-zinc-200 px-4 py-3 text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-500"
+      aria-label="アプリのバージョン情報"
+    >
+      <dl className="mx-auto flex max-w-3xl flex-col gap-1 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-1">
+        <div className="flex gap-2">
+          <dt className="shrink-0 font-medium text-zinc-600 dark:text-zinc-400">
+            環境
+          </dt>
+          <dd>{isDev ? "開発" : "本番"}</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="shrink-0 font-medium text-zinc-600 dark:text-zinc-400">
+            バージョン
+          </dt>
+          <dd className="font-mono">{version}</dd>
+        </div>
+        <div className="flex gap-2">
+          <dt className="shrink-0 font-medium text-zinc-600 dark:text-zinc-400">
+            ビルド日時
+          </dt>
+          <dd className="font-mono">
+            {buildTime ?? "未設定"}
+          </dd>
+        </div>
+      </dl>
+    </footer>
+  );
+}
+
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+      <main className="flex w-full max-w-3xl flex-1 flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
         <Image
           className="dark:invert"
           src="/next.svg"
@@ -60,6 +96,7 @@ export default function Home() {
           </a>
         </div>
       </main>
+      <AppMeta />
     </div>
   );
 }
