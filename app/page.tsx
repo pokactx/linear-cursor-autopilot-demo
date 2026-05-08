@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { getAppBuildInfo } from "./build-info";
 
 export default function Home() {
+  const { version, buildTime, environmentLabel } = getAppBuildInfo();
+
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
@@ -59,6 +62,24 @@ export default function Home() {
             Documentation
           </a>
         </div>
+        <footer
+          className="mt-12 w-full border-t border-zinc-200 pt-6 text-center text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-500 sm:text-left"
+          aria-label="Application build information"
+        >
+          <p>
+            <span className="font-medium text-zinc-600 dark:text-zinc-400">
+              {environmentLabel}
+            </span>
+            <span aria-hidden="true"> · </span>
+            <span>Version {version}</span>
+            {buildTime ? (
+              <>
+                <span aria-hidden="true"> · </span>
+                <span>Build {buildTime}</span>
+              </>
+            ) : null}
+          </p>
+        </footer>
       </main>
     </div>
   );
